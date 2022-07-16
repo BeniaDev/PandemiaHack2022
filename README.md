@@ -22,3 +22,6 @@ foo@bar:~$ python3 app.py
 ### 4. Check Working app on http://127.0.0.1:8050/ 
 ![Alt text](data/app_demo.png?raw=true "Title")
 
+
+### Deployed Demo Link:
+http://91.122.105.100:8050
