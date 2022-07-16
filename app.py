@@ -8,8 +8,11 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import pandas as pd
 
+
 import logging
-from src.model import predict
+from src.model import load_models, predict
+
+predict('./data/covid_data_test.csv')
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[
@@ -20,9 +23,7 @@ logging.basicConfig(level=logging.INFO,
                     datefmt='%m.%d.%Y %H:%M:%S')
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
-
-
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 df = pd.read_csv('data/covid_data_train.csv')
 df = df[df['inf_rate'].notnull()]
 df['text'] = df.apply(lambda x: x['name']+ '  Уровень заражения: '+str(round(x['inf_rate'], 1)), axis= 1)
@@ -83,7 +84,7 @@ app.layout = html.Div([body])
 
 @app.callback(
     Output('town-graph', 'figure'),
-    Input('covid-map', 'hoverData'))
+    Input('covid-map', 'clickData'))
 def update_y_timeseries(hoverData):
     town_name = hoverData['points'][0]['text'].split('  Уровень заражения')[0]
 
