@@ -27,7 +27,6 @@ def get_explain_data(town_name, df, X):
 df, X_test_data = load_test_data('data/covid_data_test.csv')
 
 
-
 logging.basicConfig(level=logging.INFO,
                     handlers=[
                         logging.FileHandler("./logs/app.log", "a"),
@@ -66,14 +65,11 @@ layout = dict(margin=dict(
                 ))
 
 fig = go.Figure(data=data, layout=layout)
-
+fig.update_layout(title_text='Карта предсказаний уровня заражения для городов России')
 
 childrens=[
-    html.H1(children='Уровень заражения Covid-19'),
-    html.Div(children='''
-        
-    '''),
-
+    html.H1(children='Уровень заражения Covid-19 на март 2020 года'),
+    html.Br(),
     html.Div([
         dcc.Graph(
             id='covid-map',
@@ -109,9 +105,9 @@ def update_y_timeseries(hoverData):
         y=bar_df['weight'],
         # marker_color=colors  # marker color can be a single color value or an iterable
     )])
-    fig.update_layout(title_text='Least Used Feature')
+    fig.update_layout(title_text='Вклад признаков в предсказание моделью')
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=True)
 
