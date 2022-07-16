@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
 import pickle
 import logging
 
@@ -169,12 +170,22 @@ def normalize_numeric(df: pd.DataFrame, numeric_features: list) -> pd.DataFrame:
 
     return df
 
-
-if __name__ == "__main__":
+def get_train_test():
     df = pd.read_csv("./data/" + "covid_data_train.csv")
     df = clean_df(df, fillna_zero_cols_list, fillna_median_cols_list, trash_cols_list)
     df = normalize_numeric(df, NUMERIC_FEATURES)
-    print(df)
+
+    X = df[NUMERIC_FEATURES]
+    y = df[TARGET]
+
+    X, X_final_test, y, y_final_test = train_test_split(
+        X, y, test_size=0.05, random_state=432)
+
+    return X, X_final_test, y, y_final_test
+
+
+if __name__ == "__main__":
+    get_train_test()
 
 
 
