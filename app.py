@@ -44,7 +44,7 @@ data=go.Scattermapbox(
     lat=df['lat'],
     text=df['text'],
     mode='markers',
-    marker={"size": 3*(df['inf_rate']+1)},
+    marker={"size": 3*(df['inf_rate']+1),'color':'#ff3030'},
 )
 
 layout = dict(margin=dict(
@@ -100,14 +100,16 @@ def update_y_timeseries(hoverData):
 
     colors = ['lightslategray', ] * 5
     colors[1] = 'crimson'
+
+    bar_df.loc[0,'feature'] = 'Базовое смещение'
     fig = go.Figure(data=[go.Bar(
         x=bar_df['feature'],
         y=bar_df['weight'],
-        # marker_color=colors  # marker color can be a single color value or an iterable
+        marker_color=['#ff3030' if w>0 else '#85ff30' for w in bar_df['weight']]  # marker color can be a single color value or an iterable
     )])
     fig.update_layout(title_text='Вклад признаков в предсказание моделью')
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
 
