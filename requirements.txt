@@ -5,4 +5,5 @@ dash_html_components==2.0.0
 numpy==1.22.3
 pandas==1.4.3
 plotly==5.6.0
-scikit_learn==1.1.1
+scikit_learn==1.0.2
+eli5==0.13.0
