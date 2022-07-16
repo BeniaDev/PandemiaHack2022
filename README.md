@@ -5,7 +5,7 @@
 http://91.122.105.100:8050
 
 
-![Alt text](data/app_demo.png?raw=true "Title")
+![Alt text](data/demo_app_screen.png?raw=true "Title")
 
 
 [Colab Training Pipeline Notebook](https://colab.research.google.com/drive/12fib-WBfWvsbRb4x-7Rm6PXlKeLfGmz-)
