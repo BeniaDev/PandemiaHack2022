@@ -1,5 +1,5 @@
 from sklearn.metrics import mean_absolute_error
-from data_preprocessing import get_train_test
+from src.data_preprocessing import get_train_test, preprocess_data
 
 import logging
 import pickle
@@ -29,7 +29,9 @@ def validate_models(X_final_test: pd.DataFrame, y_final_test: pd.DataFrame) -> d
     return run_results
 
 
-def predict(X: pd.DataFrame) -> pd.DataFrame:
+def predict(path_to_data: str) -> pd.DataFrame:
+    X = preprocess_data(path_to_data)
+
     model1, model2 = load_models()
     preds1 = model1.predict(X)
     preds2 = model2.predict(X).reshape(len(X))
@@ -41,6 +43,8 @@ def predict(X: pd.DataFrame) -> pd.DataFrame:
 if __name__ == '__main__':
     X, X_final_test, y, y_final_test = get_train_test()
     print(predict(X))
+
+
 
 
 

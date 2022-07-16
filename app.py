@@ -9,6 +9,7 @@ import dash_core_components as dcc
 import pandas as pd
 
 import logging
+from src.model import predict
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[
@@ -100,3 +101,5 @@ def update_y_timeseries(hoverData):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
+    #print(predict("./data/Тестовый датасет/covid_data_test.csv"))

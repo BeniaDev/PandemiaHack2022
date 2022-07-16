@@ -164,11 +164,12 @@ def normalize_numeric(df: pd.DataFrame, numeric_features: list) -> pd.DataFrame:
         numeric_normalizers[col] = scaler
 
     # saving pickle of dict with MinMaxScaler for every col in df
-    model_filename = "MinMaxScalers.sav"
-    saved_model = pickle.dump(numeric_normalizers, open(model_filename, 'wb'))
-    logging.info('Model is saved into to disk successfully Using Pickle')
+    # model_filename = "MinMaxScalers.sav"
+    # saved_model = pickle.dump(numeric_normalizers, open("./models/" + model_filename, 'wb'))
+    # logging.info('Model is saved into to disk successfully Using Pickle')
 
     return df
+
 
 def get_train_test():
     df = pd.read_csv("./data/" + "covid_data_train.csv")
@@ -183,6 +184,16 @@ def get_train_test():
         X, y, test_size=0.05, random_state=432)
 
     return X, X_final_test, y, y_final_test
+
+
+def preprocess_data(path_to_data: str) -> pd.DataFrame:
+    df = pd.read_csv(path_to_data)
+    df = clean_df(df, fillna_zero_cols_list, fillna_median_cols_list, trash_cols_list)
+    df = normalize_numeric(df, NUMERIC_FEATURES)
+
+    X = df[NUMERIC_FEATURES]
+
+    return X
 
 
 if __name__ == "__main__":
