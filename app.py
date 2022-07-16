@@ -7,12 +7,27 @@ import plotly.express as px
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import pandas as pd
-
+import eli5
 
 import logging
 from src.model import load_models, predict
 
-predict('./data/covid_data_test.csv')
+tree_model, knn_model = load_models()
+
+def load_test_data(path):
+    test_df = pd.read_csv(path)
+    test_df['inf_rate'], X_test_data = predict(path)
+    test_df['text'] = test_df.apply(lambda x: x['name']+ '  Уровень заражения: '+str(round(x['inf_rate'], 1)), axis= 1)
+    return test_df, X_test_data
+
+def get_explain_data(town_name, df, X):
+    data = X[df['name']==town_name].iloc[0]
+    explanation_pred = eli5.explain_prediction_df(estimator=tree_model, doc=data)
+    return explanation_pred[['feature','weight']]
+
+df, X_test_data = load_test_data('data/covid_data_test.csv')
+
+
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[
@@ -24,9 +39,7 @@ logging.basicConfig(level=logging.INFO,
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-df = pd.read_csv('data/covid_data_train.csv')
-df = df[df['inf_rate'].notnull()]
-df['text'] = df.apply(lambda x: x['name']+ '  Уровень заражения: '+str(round(x['inf_rate'], 1)), axis= 1)
+
 
 data=go.Scattermapbox(
     lon=df['lng'],
@@ -87,14 +100,14 @@ app.layout = html.Div([body])
     Input('covid-map', 'clickData'))
 def update_y_timeseries(hoverData):
     town_name = hoverData['points'][0]['text'].split('  Уровень заражения')[0]
+    bar_df = get_explain_data(town_name, df, X_test_data)
 
     colors = ['lightslategray', ] * 5
     colors[1] = 'crimson'
     fig = go.Figure(data=[go.Bar(
-        x=['Feature A', 'Feature B', 'Feature C',
-           'Feature D', 'Feature E'],
-        y=[20, 14, 23, 25, 22],
-        marker_color=colors  # marker color can be a single color value or an iterable
+        x=bar_df['feature'],
+        y=bar_df['weight'],
+        # marker_color=colors  # marker color can be a single color value or an iterable
     )])
     fig.update_layout(title_text='Least Used Feature')
     return fig
@@ -103,4 +116,3 @@ def update_y_timeseries(hoverData):
 if __name__ == '__main__':
     app.run_server(debug=True)
 
-    #print(predict("./data/Тестовый датасет/covid_data_test.csv"))
