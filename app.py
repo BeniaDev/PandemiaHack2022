@@ -5,12 +5,21 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import plotly.express as px
 from dash.dependencies import Input, Output
+import dash_core_components as dcc
 import pandas as pd
+
+import logging
+
+logging.basicConfig(level=logging.INFO,
+                    handlers=[
+                        logging.FileHandler("./logs/app.log", "a"),
+                        logging.StreamHandler()
+                    ],
+                    format='[%(asctime)s | %(levelname)s]: %(message)s',
+                    datefmt='%m.%d.%Y %H:%M:%S')
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
-
-
 
 
 df = pd.read_csv('data/covid_data_train.csv')
@@ -46,7 +55,7 @@ fig = go.Figure(data=data, layout=layout)
 
 
 childrens=[
-    html.H1(children='Identified Geothermal Systems of the Western USA'),
+    html.H1(children='Уровень заражения Covid-19'),
     html.Div(children='''
         This data was provided by the USGS.
     '''),
