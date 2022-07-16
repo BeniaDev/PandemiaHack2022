@@ -29,10 +29,10 @@ def validate_models(X_final_test: pd.DataFrame, y_final_test: pd.DataFrame) -> d
     return run_results
 
 
-def predict(X: pd.Dataframe) -> pd.DataFrame:
+def predict(X: pd.DataFrame) -> pd.DataFrame:
     model1, model2 = load_models()
-    preds1 = model1.predict(X_final_test)
-    preds2 = model2.predict(X_final_test).reshape(len(X_final_test))
+    preds1 = model1.predict(X)
+    preds2 = model2.predict(X).reshape(len(X))
     preds = (preds1+preds2)/2
 
     return pd.DataFrame(preds)
@@ -40,5 +40,7 @@ def predict(X: pd.Dataframe) -> pd.DataFrame:
 
 if __name__ == '__main__':
     X, X_final_test, y, y_final_test = get_train_test()
+    print(predict(X))
+
 
 

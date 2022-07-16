@@ -172,6 +172,7 @@ def normalize_numeric(df: pd.DataFrame, numeric_features: list) -> pd.DataFrame:
 
 def get_train_test():
     df = pd.read_csv("./data/" + "covid_data_train.csv")
+    df = train_drop(df)
     df = clean_df(df, fillna_zero_cols_list, fillna_median_cols_list, trash_cols_list)
     df = normalize_numeric(df, NUMERIC_FEATURES)
 
