@@ -1,0 +1,6 @@
+[07.17.2022 03:02:04 | INFO]: Dash is running on http://127.0.0.1:8050/
+
+[07.17.2022 03:03:18 | INFO]: Model DecisionTreeRegressor.sav is loaded from disk successfully Using Pickle
+[07.17.2022 03:03:18 | INFO]: Model KNeighborsRegressor.sav is loaded from disk successfully Using Pickle
+[07.17.2022 03:08:02 | INFO]: Model DecisionTreeRegressor.sav is loaded from disk successfully Using Pickle
+[07.17.2022 03:08:02 | INFO]: Model KNeighborsRegressor.sav is loaded from disk successfully Using Pickle
