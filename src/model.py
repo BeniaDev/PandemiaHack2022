@@ -34,7 +34,7 @@ def predict(path_to_data: str) -> pd.DataFrame:
 
     model1, model2 = load_models()
     preds1 = model1.predict(X)
-    preds2 = model1.predict(X).reshape(len(X))
+    preds2 = model2.predict(X).reshape(len(X))
     preds = (preds1+preds2)/2
 
     return pd.DataFrame(preds), X
