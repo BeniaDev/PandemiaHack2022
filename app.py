@@ -1,15 +1,14 @@
-import dash
-import dash_html_components as html
-import plotly.graph_objects as go
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-import plotly.express as px
-from dash.dependencies import Input, Output
-import dash_core_components as dcc
-import pandas as pd
-import eli5
-
 import logging
+
+import dash
+import dash_bootstrap_components as dbc
+import dash_core_components as dcc
+import dash_html_components as html
+import eli5
+import pandas as pd
+import plotly.graph_objects as go
+from dash.dependencies import Input, Output
+
 from src.model import load_models, predict
 
 tree_model, knn_model = load_models()
@@ -72,7 +71,7 @@ fig = go.Figure(data=data, layout=layout)
 childrens=[
     html.H1(children='Уровень заражения Covid-19'),
     html.Div(children='''
-        This data was provided by the USGS.
+        
     '''),
 
     html.Div([
@@ -95,6 +94,7 @@ dbc.Row(
 )
 app.layout = html.Div([body])
 
+
 @app.callback(
     Output('town-graph', 'figure'),
     Input('covid-map', 'clickData'))
@@ -112,7 +112,6 @@ def update_y_timeseries(hoverData):
     fig.update_layout(title_text='Least Used Feature')
     return fig
 
-
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
 
