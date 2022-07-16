@@ -65,7 +65,7 @@ layout = dict(margin=dict(
                 ))
 
 fig = go.Figure(data=data, layout=layout)
-fig.update_layout(title_text='Карта предсказаний уровня заражения для городов России')
+fig.update_layout(title_text='Карта предсказаний уровня заражения для городов России [Кликабельно]')
 
 childrens=[
     html.H1(children='Уровень заражения Covid-19 на март 2020 года'),
